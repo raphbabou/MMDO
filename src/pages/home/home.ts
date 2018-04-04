@@ -1,45 +1,51 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Query } from '@angular/compiler/src/core';
+import {api_key}from '../../app/tmdb';
 
 
 export interface Result {
   title: string;
   author: string;
-  date:string;
-  image:string;
+  release_date:string;
+  poster_path:string;
+  adult:boolean;
+  overview:string;
+
 
 }
-const fakeResults: Result[]= [
-  { title: "azert 1", author:'RA', date:"25/12/17",image:"http://test.fr"},
-  { title: "azert 2", author:'',date:"04/02/18",image:""},
-  { title: "azkdjh", author:'RA', date:"21/03/18",image:"http://gjgdjs.fr"},
-];
-
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  results: Result[];
+  results: Observable<Result[]>;
 
-  // constructor(){
-  //   this.results = fakeResults;
-  // }
-
-  constructor(public navCtrl: NavController) {
-    this.results = [];
+  constructor(public navCtrl: NavController, public http : HttpClient) {
+    this.results = Observable.of([]);
   }
-  getItems(ev: any):void {
 
+  getItems(ev: any):void {
     // set val to the value of the searchbar
     let val = ev.target.value;
-
-    this.results = val ? fakeResults : [];
+    this.results = val ? this.fetchResults(val): Observable.of([]);
   }
+
   itemSelected(item: Result): void {
-  this.navCtrl.push(DetailsPage,item);
+    this.navCtrl.push(DetailsPage,item);
+  }
+
+  fetchResults(query:string):Observable<Result[]>{
+    return this.http.get<Result[]>("https://api.thermoviedb.org/3/search/movie?api_key=",{
+      params:{
+        'api_key':api_key,
+        'query':query
+      }
+    }).pluck('results');
   }
 
 }
