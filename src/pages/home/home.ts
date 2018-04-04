@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { DetailsPage } from '../details/details';
 
 
 export interface Result {
@@ -28,19 +29,17 @@ export class HomePage {
   // }
 
   constructor(public navCtrl: NavController) {
-    this.results = fakeResults;
+    this.results = [];
   }
-  getItems(ev: any) {
+  getItems(ev: any):void {
 
     // set val to the value of the searchbar
     let val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.results = this.results.filter((item) => {
-        return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
+    this.results = val ? fakeResults : [];
+  }
+  itemSelected(item: Result): void {
+  this.navCtrl.push(DetailsPage,item);
   }
 
 }
