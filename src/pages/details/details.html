@@ -13,13 +13,16 @@
 </ion-header>
 
 
-<ion-content padding>
-  <p>{{result.original_title}}</p>
-  <p>{{result.author}}</p>
-  <p>{{result.release_date}}</p>
-  <p><img src="https://image.tmdb.org/t/p/w154{{result.poster_path}}"></p>
-  <p>{{result.original_language}}</p>
-  <p>{{result.adult}}</p>
+<ion-content center text-center padding>
+  <b>{{result.original_title}}</b>
+</ion-content>
+<ion-content text-justify padding>
+  <p><img src="https://image.tmdb.org/t/p/w300{{result.poster_path}}"></p>
+  <!-- <p>Auteur : {{result.author}}</p> //Il n'y a jamais eu jusqu'à présent d'auteur -->
+  <p>Sorti : {{result.release_date |date }}</p>
+  <p>Langage d'origine : {{result.original_language}}</p>
   <p>{{result.overview}}</p>
+
+  <p>film pour adulte : {{result.adult}}</p>
 
 </ion-content>

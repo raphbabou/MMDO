@@ -3,7 +3,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      TMDB APP
     </ion-title>
   </ion-navbar>
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
@@ -21,6 +21,7 @@
     <ion-item *ngIf="(results | async)?.length<1">Aucun résultat</ion-item>
 
     <button ion-item *ngFor="let item of (results | async)" (click)="itemSelected(item)">
+        <img src="https://image.tmdb.org/t/p/w45{{item.poster_path}}">
       {{ item.title }}
     </button>
   </ion-list>
