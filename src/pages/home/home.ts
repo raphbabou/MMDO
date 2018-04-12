@@ -40,10 +40,11 @@ export class HomePage {
   }
 
   fetchResults(query:string):Observable<Result[]>{
-    return this.http.get<Result[]>("https://api.thermoviedb.org/3/search/movie?api_key=",{
+    return this.http.get<Result[]>("https://api.themoviedb.org/3/search/movie",{
       params:{
         'api_key':api_key,
-        'query':query
+        'query':query,
+        'language':'fr'
       }
     }).pluck('results');
   }

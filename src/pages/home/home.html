@@ -18,9 +18,9 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngIf="results.length<1">Aucun résultat</ion-item>
+    <ion-item *ngIf="(results | async)?.length<1">Aucun résultat</ion-item>
 
-    <button ion-item *ngFor="let item of results | async" (click)="itemSelected(item)">
+    <button ion-item *ngFor="let item of (results | async)" (click)="itemSelected(item)">
       {{ item.title }}
     </button>
   </ion-list>
